@@ -92,6 +92,68 @@ let hp_gate    = c.usize("hp_gate", 30);
 
 ---
 
+## 두 계층 모델 — 어디서 AI를 바꾸나
+
+| 바꾸려는 것 | 훅 | 시점 | 예제/레시피 |
+|---|---|---|---|
+| **선수 능력치 자체**(AI가 잘/못 두게) | `ModServerExtension` | 관리/시즌(틱) | 아래 §I·§J |
+| **매 틱 최종 결정**(이 상황 이 입력) | `ModPlayerInputAi::think` | 인-매치 | `examples/ai_perf`, §B~§F |
+| **드래프트 픽/밴 점수** | `ModDraftScoreHook` | 밴픽 | `examples/draft_ai`, §G |
+
+내부 "능력치→행동" 파이프라인 자체는 후킹할 수 없으므로(공식 mod_api 표면 밖), 모드는 **입력(능력치)**
+또는 **출력(최종 Input)** 을 바꾼다.
+
+## I. 능력치 직접 편집 (ModServerExtension)
+
+`serde_json`으로 `AthleteStat`을 필드명 기준 라운드트립 — 필드 추가 패치에도 안 깨진다.
+(`serde_json`은 코드가 참조하면 빌드 스크립트가 prebuilt rlib을 `--extern`으로 주입; Cargo.toml에 넣지 말 것.)
+
+```rust
+use serde_json::Value;
+
+impl ModServerExtension for MyMod {
+    // 관리 틱마다 재적용 — 훈련/노화가 다시 굴려도 유지된다.
+    fn after_management_tick(&self, ctx: &mut ServerModContext) {
+        for a in ctx.database.athletes.iter_mut() {
+            // 한 팀만: if !a.with(MY_TEAM_ID) { continue; }
+            let Ok(mut v) = serde_json::to_value(&a.stat) else { continue };
+            if let Value::Object(m) = &mut v {
+                bump(m, "judgement",     80);   // 80 미만이면 80으로 (결정 품질)
+                bump(m, "concentration", 80);   // 후반 안정성
+                bump(m, "control_speed", 80);   // 반응속도
+            }
+            if let Ok(stat) = serde_json::from_value(v) { a.stat = stat; }
+        }
+    }
+}
+
+// floor: 현재값이 n 미만일 때만 올린다(훈련으로 더 높으면 건드리지 않음). 0..100 클램프.
+fn bump(m: &mut serde_json::Map<String, Value>, key: &str, n: u64) {
+    if let Some(cur) = m.get(key).and_then(Value::as_u64) {
+        m.insert(key.into(), Value::from(cur.max(n).min(100)));
+    }
+}
+```
+
+연산 변형: `set`=`n`, `cap`=`cur.min(n)`(너프), `scale`=`cur*p/100`. §H의 `Cfg`와 합치면
+`judgement = floor:80` 같은 줄을 cfg에서 읽어 op를 고르게 만들 수 있다. 편집 가능한 능력치
+키(=인게임 능력치): `judgement`,
+`concentration`, `control_speed`, `skill_hit`, `skill_avoid`, `positioning`, `last_hit`, `mental`,
+`order`, `roaming`, `aggressive`, `ego`, `stamina`, `condition`.
+
+## J. 즉시 1회 적용 + 한 팀만
+
+```rust
+fn on_server_start(&self, ctx: &mut ServerModContext) {   // 세이브 로드 직후 1회
+    for a in ctx.database.athletes.iter_mut() {
+        if !a.with(0) { continue; }                       // team 0 선수만
+        // … 위 bump() 적용 …
+    }
+}
+```
+
+---
+
 ## 하지 말 것
 
 - `think()`에서 무거운 연산/할당 루프 (매 틱·매 선수 호출).
