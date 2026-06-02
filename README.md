@@ -6,6 +6,20 @@ Teamfight Manager 2 **AI 모드 개발 키트** — 인-매치 플레이어 AI(`
 > **필요한 것**: 게임 버전에 맞는 TFM2 Mod SDK + Rust(rustup) + MSVC 링커(VS Build Tools "Desktop C++").
 > SDK 경로는 `$env:TFM2_SDK`로 지정하거나 이 레포를 `sdk\` 폴더 옆에 두면 된다 — 아래 "SDK 준비".
 
+## 호환성 (검증 버전)
+
+| 항목 | 값 |
+|---|---|
+| 게임/SDK base 버전 | **0.4.7** (EA) |
+| Rust 툴체인 | `nightly-2026-06-02` (rustc 1.98.0-nightly, commit `6bdf43094`) — SDK가 자동 고정 |
+| Mod API 표면 | 이 base 버전의 `mod_api` rustdoc 기준 ([`docs/01`](docs/01-modapi-ai-surface.md)) |
+| 검증 | 예제 3종(ai_perf·match_tuner·draft_ai) 빌드 확인 |
+
+> ⚠️ **SDK는 버전 강결합이다.** 다른 base 버전의 SDK에서는 `mod_api` 타입/구조가 바뀔 수 있어
+> 그 버전 SDK로 다시 빌드해야 하고, 경우에 따라 예제 코드 수정이 필요할 수 있다. `build.ps1`은
+> SDK의 `base_version.txt`를 읽어 현재 버전을 출력하고, 위 검증 버전과 다르면 경고한다.
+> 게임이 패치되면 [`docs/01`](docs/01-modapi-ai-surface.md)의 시그니처를 그 SDK의 rustdoc으로 재확인할 것.
+
 ## 무엇이 들어있나
 
 | 영역 | 경로 | 내용 |

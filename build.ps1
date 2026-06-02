@@ -35,6 +35,17 @@ The SDK is the folder containing build_mod.bat, deps\, native\, toolchain_versio
 "@
 }
 
+# Report the SDK base version and warn on mismatch. The SDK is version-bound, so
+# a different base version may change mod_api types/structure — a rebuild (and
+# occasionally example tweaks) may be needed. See README "호환성".
+$VerifiedSdkVersion = "0.4.7"
+$bvFile = Join-Path $sdk "base_version.txt"
+$sdkVersion = if (Test-Path $bvFile) { (Get-Content $bvFile -Raw).Trim() } else { "unknown" }
+Write-Host "SDK: $sdk (base $sdkVersion)"
+if ($sdkVersion -ne "unknown" -and $sdkVersion -ne $VerifiedSdkVersion) {
+    Write-Warning "This kit was verified against SDK $VerifiedSdkVersion but you have $sdkVersion. mod_api types/structure may differ — examples may need adjustment."
+}
+
 # Pin the exact nightly the SDK was built with — the prebuilt mod_api rlib has a
 # version-bound ABI, so a mismatched compiler fails to load in-game. A rustup
 # `nightly-YYYY-MM-DD` ships the compiler commit from the PREVIOUS day, so the
