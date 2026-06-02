@@ -1,24 +1,44 @@
-# Build one ai-modkit example against the shared SDK in the PARENT workspace.
+# Build one ai-modkit example against the TFM2 Mod SDK.
 #   .\build.ps1                 # builds examples\ai_perf
 #   .\build.ps1 match_tuner     # builds examples\match_tuner
 #   .\build.ps1 draft_ai
 #
-# Mirrors ../build.ps1 exactly (toolchain pin + mod_api --extern injection) but
-# resolves the SDK from the parent workspace and builds from examples\<mod>.
-# Output: examples\<mod>\<mod>.dll
+# SDK location (toolchain pin + mod_api --extern injection come from it):
+#   1. $env:TFM2_SDK  if set  — point it at your mod-sdk folder
+#   2. otherwise ..\sdk relative to this repo (default workspace layout)
+# Override per-invocation with -Sdk <path>. Output: examples\<mod>\<mod>.dll
 #
-# PREREQUISITE: MSVC linker (VS Build Tools "Desktop C++"). See ../SETUP.md.
-param([string]$Mod = "ai_perf")
+# PREREQUISITE: MSVC linker (VS Build Tools "Desktop C++").
+param(
+    [string]$Mod = "ai_perf",
+    [string]$Sdk = $env:TFM2_SDK
+)
 
 $ErrorActionPreference = "Stop"
 $root = $PSScriptRoot
 $env:Path = "$env:USERPROFILE\.cargo\bin;$env:Path"
 
-# SDK lives one level up, shared with the rest of tfm2-mod-dev.
-$sdk = Join-Path (Split-Path $root -Parent) "sdk"
-if (-not (Test-Path (Join-Path $sdk "build_mod.bat"))) { throw "SDK not found at $sdk (run ../update-sdk.ps1 first)" }
+# Resolve the SDK: -Sdk / $env:TFM2_SDK first, else the parent workspace's sdk\.
+if ([string]::IsNullOrWhiteSpace($Sdk)) {
+    $sdk = Join-Path (Split-Path $root -Parent) "sdk"
+} else {
+    $sdk = $Sdk
+}
+if (-not (Test-Path (Join-Path $sdk "build_mod.bat"))) {
+    throw @"
+TFM2 Mod SDK not found at: $sdk
+Point the build at your SDK one of these ways:
+  - `$env:TFM2_SDK = 'C:\path\to\mod-sdk'`   (persistent for the session)
+  - .\build.ps1 $Mod -Sdk 'C:\path\to\mod-sdk'
+  - or place this repo beside an `sdk\` folder (default: ..\sdk)
+The SDK is the folder containing build_mod.bat, deps\, native\, toolchain_version.txt.
+"@
+}
 
-# Pin the exact nightly the SDK was built with (see ../build.ps1 for the why).
+# Pin the exact nightly the SDK was built with — the prebuilt mod_api rlib has a
+# version-bound ABI, so a mismatched compiler fails to load in-game. A rustup
+# `nightly-YYYY-MM-DD` ships the compiler commit from the PREVIOUS day, so the
+# toolchain date = (commit date in toolchain_version.txt) + 1.
 $tcCache = Join-Path $sdk "rustup_toolchain.txt"
 if (Test-Path $tcCache) {
     $env:RUSTUP_TOOLCHAIN = (Get-Content $tcCache -Raw).Trim()
