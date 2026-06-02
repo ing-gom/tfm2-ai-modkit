@@ -1,0 +1,10 @@
+{
+  "name": "AI Survival (ai-modkit)",
+  "author": "inggom",
+  "version": "0.1.0",
+  "description": "Improves in-match AI BEHAVIOUR (not stats) via ModPlayerInputAi: a stateful survival governor that overrides the native AI's final input each tick using only self-state. Position-aware HP tiers (carries/supports retreat earlier), anti-overchase (vetoes aggression when low), safer recall, and a retreat-commit window so it disengages instead of flip-flopping with the native AI. A richer companion to the ai_perf starter. Built from tfm2-ai-modkit.",
+  "last_updated": "2026-06-03",
+  "dependencies": [
+    { "mod_id": "base", "version": ">=0.1.0" }
+  ]
+}
