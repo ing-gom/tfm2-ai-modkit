@@ -1,0 +1,11 @@
+[package]
+name = "ai_perf"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# mod_api is injected by ../../build.ps1 (CARGO_ENCODED_RUSTFLAGS --extern mod_api)
+# — do NOT add it here. This example is std-only → fully offline build.

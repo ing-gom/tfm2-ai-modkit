@@ -1,0 +1,10 @@
+[package]
+name = "match_tuner"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# mod_api is injected by ../../build.ps1 — do NOT add it here. std-only build.

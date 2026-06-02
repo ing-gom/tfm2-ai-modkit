@@ -1,0 +1,10 @@
+{
+  "name": "Match Tuner (ai-modkit observer)",
+  "author": "inggom",
+  "version": "0.1.0",
+  "description": "Read-only observability mod. Hooks ModPlayerInputAi purely to log the native AI's per-tick base_input (sampled) plus player context, so you can SEE how low-stat players actually decide — wrong targets, missed skillshots, late recalls. Never changes behaviour (always Pass). Built from tfm2-ai-modkit.",
+  "last_updated": "2026-06-02",
+  "dependencies": [
+    { "mod_id": "base", "version": ">=0.1.0" }
+  ]
+}

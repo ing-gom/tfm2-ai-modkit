@@ -1,0 +1,10 @@
+{
+  "name": "Draft AI (ai-modkit starter)",
+  "author": "inggom",
+  "version": "0.1.0",
+  "description": "Starter mod for adjusting the draft pick/ban AI via ModDraftScoreHook. Logs the engine's own candidate scores for each board state, and demonstrates a small, opt-in score nudge for favoured champions. Built from tfm2-ai-modkit.",
+  "last_updated": "2026-06-02",
+  "dependencies": [
+    { "mod_id": "base", "version": ">=0.1.0" }
+  ]
+}

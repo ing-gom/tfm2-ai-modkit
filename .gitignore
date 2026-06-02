@@ -1,0 +1,9 @@
+# Rust build output
+**/target/
+
+# Built mod artifact (rebuild from source via build.ps1)
+examples/*/*.dll
+
+# Local runtime config / logs
+*.cfg
+*.log
