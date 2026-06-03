@@ -155,6 +155,16 @@ pub mod input {
     pub fn ult_on(target_id: usize) -> Input {
         Input::Ult { target: InputTarget::Target { target_id } }
     }
+
+    /// True if the native AI's chosen input is an aggressive action (attack /
+    /// any skill / ult). Move/Return are passive. Handy for "veto the chase"
+    /// behaviour: only override when the engine is committing to a fight.
+    pub fn is_aggressive(base: &Option<Input>) -> bool {
+        matches!(
+            base,
+            Some(Input::Attack { .. } | Input::Skill { .. } | Input::Skill2 { .. } | Input::Ult { .. })
+        )
+    }
 }
 
 // ---------------------------------------------------------------------------

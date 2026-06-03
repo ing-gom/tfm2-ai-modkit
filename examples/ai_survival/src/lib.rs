@@ -119,14 +119,7 @@ fn clear_commit(pid: usize) {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/// Did the native AI pick an aggressive action this tick? (attack / any skill /
-/// ult). Move/Return are passive and we never veto those.
-fn is_aggressive(base: &Option<Input>) -> bool {
-    matches!(
-        base,
-        Some(Input::Attack { .. } | Input::Skill { .. } | Input::Skill2 { .. } | Input::Ult { .. })
-    )
-}
+use ai_common::input::is_aggressive;
 
 /// Carries and supports are squishier / more positionally punished, so they
 /// should bail earlier. Returns the hp-threshold bonus (percentage points).
