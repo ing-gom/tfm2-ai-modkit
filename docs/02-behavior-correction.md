@@ -26,9 +26,15 @@ ctx.get_recall_input()/get_run_away_input()/get_run_away_without_skill_input()
 ctx.is_safe_to_recall()                                                 // 엔진의 안전 판단
 ```
 
-➡ **이게 천장이다.** 적/아군의 위치·체력·스킬·시야 같은 *세계 상태* 는 `think()`에 노출돼 있지 않다
-(인-매치 `GameCtx` 브리지는 미검증). 그래서 행동 교정은 **"내 상태 + 내장 AI가 뭘 하려는지(base_input)"**
-로 판단할 수 있는 것에 한정된다. 이 경계를 먼저 받아들이고 설계하라.
+➡ **이게 천장이다.** 적/아군의 위치·체력·스킬·시야 같은 *세계 상태* 를 `think()`에서 **직접 읽을 수는 없다**
+(인-매치 `GameCtx` 브리지 미검증). 그래서 *직접* 판단은 **"내 상태 + base_input"** 에 한정된다.
+
+> **★ 별표 — 캔 입력은 이미 월드 인지다.** `is_safe_to_recall()`, `get_run_away_input()`,
+> `get_run_away_without_skill_input()`, `get_recall_input()` 은 **엔진이 적 위치/위협을 보고 계산**해 준다.
+> "안전한가"는 주변 적을 보고 답하고, "도망 입력"은 적을 피하는 방향을 엔진이 정한다. 즉 모드는 raw
+> 월드 쿼리는 못 해도 **엔진의 월드-인지 행동을 self-상태 조건으로 *트리거* 할 수 있다**:
+> `내 HP 위험(self)` → `get_run_away_without_skill_input()`(엔진이 적 피해 도주 방향 계산) → `Replace`.
+> survival류 교정엔 이걸로 충분한 경우가 많다.
 
 ## 자신 있게 만들 수 있는 교정 (self-상태만)
 
