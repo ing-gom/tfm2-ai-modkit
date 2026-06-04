@@ -14,10 +14,10 @@ Teamfight Manager 2 **AI 모드 개발 키트** — *인-매치 플레이어 AI 
 
 | 항목 | 값 |
 |---|---|
-| 게임/SDK base 버전 | **0.4.7** (EA) |
-| Rust 툴체인 | `nightly-2026-06-02` (rustc 1.98.0-nightly, commit `6bdf43094`) — SDK가 자동 고정 |
-| Mod API 표면 | 이 base 버전의 `mod_api` rustdoc 기준 ([`docs/01`](docs/01-modapi-ai-surface.md)) |
-| 검증 | 예제 4종(ai_perf·ai_survival·match_tuner·draft_ai) 빌드 확인 |
+| 게임/SDK base 버전 | **0.4.8** (EA) |
+| Rust 툴체인 | `nightly-2026-06-03` (rustc 1.98.0-nightly, commit `d595fce01`) — SDK가 자동 고정 |
+| Mod API 표면 | 이 base 버전의 `mod_api` rustdoc 기준 ([`docs/01`](docs/01-modapi-ai-surface.md)), 전체 지원 지도 ([`docs/03`](docs/03-sdk-capabilities.md)) |
+| 검증 | 예제 4종(ai_perf·ai_survival·match_tuner·draft_ai) 빌드 확인 + 지원 표면 프로브 검증 |
 
 > ⚠️ **SDK는 버전 강결합이다.** 다른 base 버전의 SDK에서는 `mod_api` 타입/구조가 바뀔 수 있어
 > 그 버전 SDK로 다시 빌드해야 하고, 경우에 따라 예제 코드 수정이 필요할 수 있다. `build.ps1`은
@@ -28,7 +28,7 @@ Teamfight Manager 2 **AI 모드 개발 키트** — *인-매치 플레이어 AI 
 
 | 영역 | 경로 | 내용 |
 |---|---|---|
-| 📖 레퍼런스 | `docs/` | mod_api AI 표면(시그니처), 개요, 레시피, 챔피언 카탈로그 |
+| 📖 레퍼런스 | `docs/` | mod_api AI 표면(시그니처), 개요, **SDK 지원 표면 전체 지도**, 레시피, 챔피언 카탈로그 |
 | 🧩 공용 코드 | `shared/ai_common.rs` | 로깅·설정·Input 헬퍼 (std-only, 의존성 0). 예제가 `#[path]`로 포함 |
 | 🚀 예제 모드 | `examples/` | 바로 빌드되는 스타터 3종 (아래) |
 
@@ -76,8 +76,9 @@ $env:TFM2_SDK = "C:\path\to\mod-sdk"
 1. [`docs/00-overview.md`](docs/00-overview.md) — 능력치 2층 구조와 모드 관점 결정 흐름
 2. [`docs/02-behavior-correction.md`](docs/02-behavior-correction.md) ⭐ — **인-매치 행동 교정 모드 만들기**(이 키트의 핵심): 할 수 있는 것/없는 것·워크플로·self-상태 천장
 3. [`docs/01-modapi-ai-surface.md`](docs/01-modapi-ai-surface.md) — 후킹 가능한 API 정확한 시그니처
-4. [`docs/05-recipes.md`](docs/05-recipes.md) — 자주 쓰는 패턴 모음
-5. [`docs/champion-catalog.md`](docs/champion-catalog.md) — 드래프트 인덱스 0..59
+4. [`docs/03-sdk-capabilities.md`](docs/03-sdk-capabilities.md) — **SDK가 실제로 지원하는 전체 표면 지도**(무엇이 되고/안 되는지, 프로브 검증)
+5. [`docs/05-recipes.md`](docs/05-recipes.md) — 자주 쓰는 패턴 모음
+6. [`docs/champion-catalog.md`](docs/champion-catalog.md) — 드래프트 인덱스 0..59
 
 ## 라이선스 / 작성
 

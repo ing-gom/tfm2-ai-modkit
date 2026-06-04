@@ -48,8 +48,8 @@ InputTarget  = Target{id} | Dir{dx,dy} | Pos{x,y} | None
 | 인-매치, 매 틱 | **`ModPlayerInputAi`** | 최종 `Input` 교체 (성능향상·행동수정의 핵심) |
 | 드래프트, 픽/밴마다 | **`ModDraftScoreHook`** | 후보 챔피언 점수 가감 |
 | 서버/관리 로직 | `ModServerExtension` | **선수 능력치(`AthleteStat`) 직접 편집** · 운영 · DB (매치 밖) |
-| 클라이언트 프레임 | `ModExtension` | scene/UI/asset 접근, 렌더 |
-| 콘텐츠 | `ModChampionInfo`/`ModItemInfo`/`ModAction`/`ModEffectType`/`ModPassive` | 새 챔프/아이템/스킬 효과 |
+| 클라이언트 프레임 | `ModExtension` | scene/UI/asset 접근, 렌더 + **클라 DB 조회·모드 영구저장**(`mod_save_data`). [`03`](03-sdk-capabilities.md) §A-4 |
+| 콘텐츠 | `ModChampionInfo`/`ModItemInfo`/`ModAction`/`ModEffectType`/`ModPassive` | 새 챔프/아이템/스킬 효과 — ⛔ **0.4.8 구현 불가**(반환 타입 비공개, 프로브 확정. [`03`](03-sdk-capabilities.md) §B) |
 
 ## 핵심 원칙
 

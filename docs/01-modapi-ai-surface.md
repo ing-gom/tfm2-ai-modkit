@@ -1,6 +1,6 @@
 # 01 · mod_api AI 표면 (정확한 시그니처)
 
-> 출처: SDK `mod_api` rustdoc. **기준 버전: SDK base 0.4.7** (EA). API 버전 강결합 —
+> 출처: SDK `mod_api` rustdoc. **기준 버전: SDK base 0.4.8** (EA). API 버전 강결합 —
 > 다른 SDK 버전에서는 시그니처가 바뀔 수 있으니 그 버전 rustdoc으로 재확인할 것.
 
 ## ModPlayerInputAi — 인-매치 매 틱 결정 교체

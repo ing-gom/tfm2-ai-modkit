@@ -3,7 +3,7 @@
   "author": "inggom",
   "version": "0.1.0",
   "description": "Starter mod for improving the in-match player AI via the native ModPlayerInputAi hook. Ships safer low-HP recall + kiting, and a clearly marked TODO slot for your own per-tick behaviour. Built from tfm2-ai-modkit.",
-  "last_updated": "2026-06-02",
+  "last_updated": "2026-06-04",
   "dependencies": [
     { "mod_id": "base", "version": ">=0.1.0" }
   ]
