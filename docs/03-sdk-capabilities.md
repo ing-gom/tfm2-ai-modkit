@@ -44,6 +44,7 @@ mod_api는 표면적으로 **11개 trait**을 노출하지만, "trait이 존재�
      서버→클라 **모드 이벤트** 송신(payload: bytes). `handle_command`로 클라가 보낸 `ModServerCommand` 수신.
      → 모드가 자체 클라이언트↔서버 메시징을 구성할 수 있다.
    - 헬퍼: `ctx.player_team_id(player_id)`, `ctx.team_player_ids(team_id)`.
+   - 예제: **`examples/stat_editor`** — `AthleteStat`을 serde_json으로 set/floor/cap/scale 편집 + 관리 틱마다 재적용.
 4. **`ModExtension`** — `on_init/pre_update/post_update/pre_render/post_render/on_end`. 각 훅이 받는
    **`&mut Scene`** 가 인-매치일 때 `Scene::InGame { data: ClientData }` 로, 여기서 **클라이언트 DB 전체에 도달**한다.
    이게 "DB 접근을 모드에 열어준" 실제 경로다(콘텐츠 저작과 달리 **프로브로 도달 확인** — `_apiprobe/probe_db.rs`).

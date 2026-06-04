@@ -1,0 +1,10 @@
+{
+  "name": "Stat Editor (ai-modkit starter)",
+  "author": "inggom",
+  "version": "0.1.0",
+  "description": "Starter for the management-layer extension point (ModServerExtension): the supported way to 'change the AI's numbers'. Edits each athlete's raw AthleteStat directly in the database via serde_json (field-name agnostic), then re-applies after every management tick so training/aging never washes it out. Raising stats makes the built-in match AI play better. Config-driven set/floor/cap/scale per stat, optional team filter. Built from tfm2-ai-modkit.",
+  "last_updated": "2026-06-04",
+  "dependencies": [
+    { "mod_id": "base", "version": ">=0.1.0" }
+  ]
+}

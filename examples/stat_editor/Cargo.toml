@@ -1,0 +1,12 @@
+[package]
+name = "stat_editor"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# mod_api AND serde_json are injected by ../../build.ps1 as prebuilt rlibs
+# (CARGO_ENCODED_RUSTFLAGS --extern). serde_json is auto-injected because this
+# source references it — do NOT add either here. Still a fully offline build.
