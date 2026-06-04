@@ -14,8 +14,8 @@ Teamfight Manager 2 **AI 모드 개발 키트** — *인-매치 플레이어 AI 
 
 | 항목 | 값 |
 |---|---|
-| 게임/SDK base 버전 | **0.4.8** (EA) |
-| Rust 툴체인 | `nightly-2026-06-03` (rustc 1.98.0-nightly, commit `d595fce01`) — SDK가 자동 고정 |
+| 게임/SDK base 버전 | **0.4.9** (EA) |
+| Rust 툴체인 | `nightly-2026-06-04` (rustc 1.98.0-nightly, commit `b354133fb`) — SDK가 자동 고정 |
 | Mod API 표면 | 이 base 버전의 `mod_api` rustdoc 기준 ([`docs/01`](docs/01-modapi-ai-surface.md)), 전체 지원 지도 ([`docs/03`](docs/03-sdk-capabilities.md)) |
 | 검증 | 예제 6종(ai_perf·ai_survival·match_tuner·draft_ai·db_inspector·stat_editor) 빌드 확인 + 지원 표면 프로브 검증 |
 
