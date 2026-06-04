@@ -1,0 +1,10 @@
+{
+  "name": "DB Inspector (ai-modkit)",
+  "author": "inggom",
+  "version": "0.1.0",
+  "description": "Demonstrates the client-database access opened to mods in SDK 0.4.8 via ModExtension. Each time the game enters a match, a frame hook reads the client DB (athlete/team counts) from Scene::InGame -> ClientData and bumps a cross-session 'match entries' counter stored with mod_save_data (saved into the game's save file). Read-only on game state; logs to %TEMP%\\db_inspector.log. Built from tfm2-ai-modkit.",
+  "last_updated": "2026-06-04",
+  "dependencies": [
+    { "mod_id": "base", "version": ">=0.1.0" }
+  ]
+}

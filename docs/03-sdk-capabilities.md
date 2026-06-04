@@ -70,6 +70,8 @@ mod_api는 표면적으로 **11개 trait**을 노출하지만, "trait이 존재�
      `ClientDatabase`가 권위 상태인지 클라 뷰인지)는 인게임 검증 필요. **능력치 영구 편집은 `ModServerExtension`
      경로(§3, 검증됨)를 쓰라.** `ModExtension`은 조회·영구저장·오버레이가 검증된 용도.
    - 렌더: `RenderState` 접근하나 커스텀 캔버스는 인자 타입(`RenderCommand`)이 비공개라 막힘(프로브 확인).
+   - 예제: **`examples/db_inspector`** — 매치 진입마다 클라 DB(선수/팀 수) 조회 + `mod_save_data`에 진입
+     횟수를 세이브에 영구 저장(세션 간 유지). 위 패턴의 빌드 검증된 최소 스타터.
 5. **`GameCtx`**(🔬) — `init(&GameCtx)`에만 전달되는 월드 핸들. `deal_damage/heal/add_buff/apply_cc/
    get_entity/distance_sq/is_visible` 등 조회·변형 메서드를 갖지만 **매 틱 GameCtx를 주는 공식 훅이 없고**,
    init 시점엔 sim이 미가동(state=null)이라 호출 시 크래시 → **인-매치 월드 쿼리 경로는 닫혀 있음**. 설계 참고용.
