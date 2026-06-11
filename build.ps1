@@ -38,7 +38,7 @@ The SDK is the folder containing build_mod.bat, deps\, native\, toolchain_versio
 # Report the SDK base version and warn on mismatch. The SDK is version-bound, so
 # a different base version may change mod_api types/structure — a rebuild (and
 # occasionally example tweaks) may be needed. See README "호환성".
-$VerifiedSdkVersion = "0.4.9"
+$VerifiedSdkVersion = "0.4.12"
 $bvFile = Join-Path $sdk "base_version.txt"
 $sdkVersion = if (Test-Path $bvFile) { (Get-Content $bvFile -Raw).Trim() } else { "unknown" }
 Write-Host "SDK: $sdk (base $sdkVersion)"

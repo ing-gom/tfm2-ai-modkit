@@ -1,9 +1,14 @@
-# 03 · SDK 지원 표면 전체 지도 (mod_api 0.4.9)
+# 03 · SDK 지원 표면 전체 지도 (mod_api 0.4.12)
 
-> SDK `mod_api`가 **실제로 무엇을 지원하는지** 한 장으로 본다. 출처: 0.4.9 rlib로 재생성한 rustdoc
-> (`rustc 1.98.0-nightly b354133fb`, `nightly-2026-06-04`) 전수 + **컴파일 프로브로 구현 가능 여부 검증**.
-> 0.4.7→0.4.8→0.4.9 항목 인벤토리는 **완전 동일**(구조체 58·enum 23·trait 11·매크로 1·함수 1·타입별칭 3·상수 4 = 총 101),
-> 예제 6종·내부 모드 6종 무수정 재빌드 + 프로브 재검증(콘텐츠 ⛔ 차단·DB ✅ 개방 동일) → 공개 시그니처 churn 없음.
+> SDK `mod_api`가 **실제로 무엇을 지원하는지** 한 장으로 본다. 출처: 0.4.12 rlib로 재생성한 rustdoc
+> (`rustc 1.98.0-nightly 485ec3fbc`, `nightly-2026-06-11`) 전수 + **컴파일 프로브로 구현 가능 여부 검증**.
+> **타입 인벤토리**는 0.4.7→0.4.12 **완전 동일**(구조체 58·enum 23·trait 11·매크로 1·함수 1·타입별칭 3·상수 4 = 총 101) —
+> 타입 추가/삭제 0. 단 0.4.12는 **멤버 수준 추가분**이 있다(전부 대회 포맷·클라 DB 편집·챔피언 패치 영역,
+> **AI 후킹 표면과 무관**): `LeagueCompetition`/`TournamentCompetition` 플레이오프·대회포맷 메서드,
+> `ClientDatabase`의 `custom_athlete_faces`/`custom_logos`/`custom_staff_faces`·`solo_rank_sort`·DB편집 API,
+> `UIOutEvent::CloseCurrentDatabaseEdit`, `ChampionInfo::apply_action_patch_to_slot`.
+> **AI 후킹 표면**(`ModPlayerInputAi`·`PlayerAiContext`·`ModDraftScoreHook`·`ModServerExtension`·`AthleteStat`)은 **변화 없음**.
+> 예제 6종 무수정 재빌드 + 프로브 재검증(콘텐츠 ⛔ 차단·DB ✅ 개방 동일).
 
 mod_api는 표면적으로 **11개 trait**을 노출하지만, "trait이 존재한다 ≠ 모드가 구현할 수 있다". 어떤 trait은
 **반환 타입이 비공개**라 모드가 시그니처조차 못 쓴다(=구현 불가). 이 문서는 그 경계를 **프로브로 확정**해 둔다.
